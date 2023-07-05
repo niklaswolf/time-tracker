@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  typescript: {
-    shim: false
-  },
-  devtools: { enabled: true },
-  ssr: false
+  css: ['~/assets/css/global.css'],
+  devtools: { enabled: false },
+  ssr: false,
 })

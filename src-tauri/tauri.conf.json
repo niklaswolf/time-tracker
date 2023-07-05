@@ -50,16 +50,26 @@
     "security": {
       "csp": null
     },
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
     "updater": {
       "active": false
     },
+    "macOSPrivateApi": true,
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
-        "resizable": true,
-        "title": "@niklaswolf/time-tracker",
-        "width": 800
+        "height": 100,
+        "resizable": false,
+        "title": "menubar",
+        "width": 300,
+        "visible": false,
+        "hiddenTitle": true,
+        "decorations": false,
+        "focus": false,
+        "transparent": true
       }
     ]
   }

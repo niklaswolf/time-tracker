@@ -9,7 +9,5 @@ invoke('greet', { name: 'World' })
     .then((response) => console.log(response))
 </script>
 <template>
-  <div>
-    <NuxtWelcome/>
-  </div>
+  <MenuBar />
 </template>
