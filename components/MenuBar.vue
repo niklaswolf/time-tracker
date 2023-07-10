@@ -1,6 +1,19 @@
+<script lang="ts" setup>
+const {startTimer, stopTimer, resumeTimer, pauseTimer, isRunning, isPaused} = useTimer();
+</script>
+
 <template>
   <div class="arrow">
-    <div class="menu-bar">Menubar widget here</div>
+    <div class="menu-bar">
+      <template v-if="!isRunning">
+        <button @click="startTimer()" >Start Timer</button>
+        <button v-if="isPaused" @click="resumeTimer()">Resume Timer</button>
+      </template>
+      <template v-else>
+        <button @click="pauseTimer()" >Pause Timer</button>
+        <button @click="stopTimer()">Stop Timer</button>
+      </template>
+    </div>
   </div>
 </template>
 

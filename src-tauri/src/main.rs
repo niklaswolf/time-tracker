@@ -43,12 +43,12 @@ fn main() {
             }
             _ => {}
         })
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![update_system_tray_title])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}!", name)
+fn update_system_tray_title(title: &str, app_handle: tauri::AppHandle){
+    let _ =app_handle.tray_handle().set_title(title);
 }
