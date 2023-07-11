@@ -1,12 +1,12 @@
 import {invoke} from '@tauri-apps/api'
-import exp from "constants";
+
+const startTime = ref<Date | null>(null);
+const expiredTime = ref(0);
+const savedTime = ref(0);
+const interval = ref();
+const isRunning = ref(false);
 
 export const useTimer = () => {
-    const startTime = ref<Date | null>(null);
-    const expiredTime = ref(0);
-    const savedTime = ref(0);
-    const interval = ref();
-    const isRunning = ref(false);
     const isPaused = computed(() => !isRunning.value && savedTime.value > 0)
 
     function startTimer() {
