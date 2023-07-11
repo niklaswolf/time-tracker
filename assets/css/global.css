@@ -1,10 +1,10 @@
-body {
+body:has(.menubar) {
     min-height: 100vh;
     margin: 0;
     overflow: hidden;
 }
 
-#__nuxt {
+#__nuxt:has(.menubar) {
     min-height: 100vh;
     overflow: hidden;
 }

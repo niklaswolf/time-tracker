@@ -21,7 +21,7 @@ fn main() {
                     ..
                 } => {
 
-                    let window = app.get_window("main").unwrap();
+                    let window = app.get_window("menubar").unwrap();
                     // use TrayCenter as initial window position
                     let _ = window.move_window(Position::TrayCenter);
                     if window.is_visible().unwrap() {
@@ -37,8 +37,16 @@ fn main() {
         .on_window_event(|event| match event.event() {
             tauri::WindowEvent::Focused(is_focused) => {
                 // detect click outside of the focused window and hide the app
-                if !is_focused {
+                if !is_focused && event.window().label() == "menubar" {
                     event.window().hide().unwrap();
+                }
+            },
+            tauri::WindowEvent::CloseRequested {
+                api, ..
+            } => {
+                if event.window().label() == "main" {
+                    event.window().hide().unwrap();
+                    api.prevent_close()
                 }
             }
             _ => {}

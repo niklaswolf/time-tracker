@@ -1,5 +1,12 @@
 <script lang="ts" setup>
+import {appWindow, WebviewWindow, getAll} from "@tauri-apps/api/window";
 const {startTimer, stopTimer, resumeTimer, pauseTimer, isRunning, isPaused} = useTimer();
+
+function handleOpenMain(){
+  const mainWindow = getAll().find(window => window.label === 'main');
+  mainWindow?.show();
+}
+
 </script>
 
 <template>
@@ -13,6 +20,7 @@ const {startTimer, stopTimer, resumeTimer, pauseTimer, isRunning, isPaused} = us
         <button @click="pauseTimer()" >Pause Timer</button>
         <button @click="stopTimer()">Stop Timer</button>
       </template>
+      <button @click="handleOpenMain">Open main</button>
     </div>
   </div>
 </template>

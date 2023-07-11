@@ -63,6 +63,7 @@
     "macOSPrivateApi": true,
     "windows": [
       {
+        "label": "menubar",
         "fullscreen": false,
         "height": 100,
         "resizable": false,
@@ -73,6 +74,19 @@
         "decorations": false,
         "focus": false,
         "transparent": true
+      },
+      {
+        "label": "main",
+        "fullscreen": false,
+        "height": 600,
+        "resizable": true,
+        "title": "main",
+        "width": 800,
+        "visible": true,
+        "hiddenTitle": true,
+        "decorations": true,
+        "focus": false,
+        "transparent": false
       }
     ]
   }
