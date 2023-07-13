@@ -2,9 +2,26 @@ import {invoke} from '@tauri-apps/api'
 
 const startTime = ref<Date | null>(null);
 const expiredTime = ref(0);
+const formatted = ref(formatTime(0));
 const savedTime = ref(0);
 const interval = ref();
 const isRunning = ref(false);
+
+function formatTime(dateDiff: number): string {
+    if(dateDiff === 0){
+        return "--:--";
+    }
+    const _second = 1000;
+    const _minute = _second * 60;
+    const _hour = _minute * 60;
+    const _day = _hour * 24;
+
+    const hours = Math.floor((dateDiff % _day) / _hour).toString().padStart(2, '0');
+    const minutes = Math.floor((dateDiff % _hour) / _minute).toString().padStart(2, '0');
+    const seconds = Math.floor((dateDiff % _minute) / _second).toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+}
 
 export const useTimer = () => {
     const isPaused = computed(() => !isRunning.value && savedTime.value > 0)
@@ -13,52 +30,44 @@ export const useTimer = () => {
         startTime.value = new Date();
         isRunning.value = true;
 
-        invoke('update_system_tray_title', {title: formatTime(expiredTime.value + savedTime.value)})
+        formatted.value = formatTime(expiredTime.value + savedTime.value);
+        invoke('update_system_tray_title', {title: formatted.value})
         interval.value = setInterval(() => {
             if (startTime.value) {
                 const now = new Date().getTime();
                 const start = startTime.value.getTime();
                 expiredTime.value = (now - start) + savedTime.value;
-                const formatted = formatTime(expiredTime.value);
-                invoke('update_system_tray_title', {title: formatted})
+                formatted.value = formatTime(expiredTime.value);
+                invoke('update_system_tray_title', {title: formatted.value})
             }
 
         }, 1000);
     }
 
-    function pauseTimer(): void {
-        const formatted = formatTime(expiredTime.value);
-        invoke('update_system_tray_title', {title: formatted + " ⏸"})
-        stopTimer(true);
+    async function pauseTimer(): Promise<void> {
+        await stopTimer(true);
     }
 
     function resumeTimer(): void {
         startTimer();
     }
 
-    function stopTimer(saveTime: boolean = false): void {
+    async function stopTimer(saveTime: boolean = false): Promise<void> {
         isRunning.value = false;
         clearInterval(interval.value);
         interval.value = null;
+        let suffix = '';
         if (saveTime) {
             savedTime.value = expiredTime.value;
+            suffix = ' ⏸'
         } else {
             savedTime.value = 0;
         }
         expiredTime.value = 0;
-    }
 
-    function formatTime(dateDiff: number): string {
-        const _second = 1000;
-        const _minute = _second * 60;
-        const _hour = _minute * 60;
-        const _day = _hour * 24;
-
-        const hours = Math.floor((dateDiff % _day) / _hour).toString().padStart(2, '0');
-        const minutes = Math.floor((dateDiff % _hour) / _minute).toString().padStart(2, '0');
-        const seconds = Math.floor((dateDiff % _minute) / _second).toString().padStart(2, '0');
-
-        return `${hours}:${minutes}:${seconds}`;
+        formatted.value = formatTime(savedTime.value);
+        const title = formatted.value + suffix
+        await invoke('update_system_tray_title', { title })
     }
 
     onBeforeUnmount(() => {
@@ -73,6 +82,7 @@ export const useTimer = () => {
         pauseTimer,
         resumeTimer,
         isRunning,
-        isPaused
+        isPaused,
+        formatted
     }
 }

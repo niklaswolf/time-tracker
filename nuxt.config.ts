@@ -3,4 +3,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/global.css'],
   devtools: { enabled: false },
   ssr: false,
+  modules: [
+    '@unocss/nuxt',
+  ],
 })
