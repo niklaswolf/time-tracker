@@ -17,6 +17,7 @@ if(appWindow.label === 'main'){
 
 </script>
 <template>
-  <MenuBar v-if="appWindow.label === 'menubar'" class="menubar"/>
+  <MenuBar v-if="appWindow.label === 'menubar'" class="menubar grow"/>
+  <IdleNotification v-else-if="appWindow.label === 'idle-notification'" class="idle-notification grow"/>
   <NuxtWelcome v-else class="main"></NuxtWelcome>
 </template>

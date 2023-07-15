@@ -1,23 +1,12 @@
-body:has(.menubar) {
+body:has(.menubar, .idle-notification) {
     min-height: 100vh;
     margin: 0;
     overflow: hidden;
 }
 
-#__nuxt:has(.menubar) {
+#__nuxt:has(.menubar, .idle-notification) {
     min-height: 100vh;
     overflow: hidden;
-}
-
-:root {
-    --bg-color: #e7e6e6;
-    --bg-border-color: #e7e6e6;
-    --color: #1f2023;
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #1f2023;
-        --bg-border-color: #2d2f33;
-        --color: #e7e6e6;
-    }
+    display: flex;
+    flex-direction: column;
 }

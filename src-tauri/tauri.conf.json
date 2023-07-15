@@ -87,6 +87,19 @@
         "decorations": true,
         "focus": false,
         "transparent": false
+      },
+      {
+        "label": "idle-notification",
+        "fullscreen": false,
+        "height": 300,
+        "resizable": false,
+        "title": "idle-notification",
+        "width": 600,
+        "visible": false,
+        "hiddenTitle": true,
+        "decorations": false,
+        "focus": false,
+        "transparent": false
       }
     ]
   }

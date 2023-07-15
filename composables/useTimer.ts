@@ -7,22 +7,6 @@ const savedTime = ref(0);
 const interval = ref();
 const isRunning = ref(false);
 
-function formatTime(dateDiff: number): string {
-    if(dateDiff === 0){
-        return "--:--";
-    }
-    const _second = 1000;
-    const _minute = _second * 60;
-    const _hour = _minute * 60;
-    const _day = _hour * 24;
-
-    const hours = Math.floor((dateDiff % _day) / _hour).toString().padStart(2, '0');
-    const minutes = Math.floor((dateDiff % _hour) / _minute).toString().padStart(2, '0');
-    const seconds = Math.floor((dateDiff % _minute) / _second).toString().padStart(2, '0');
-
-    return `${hours}:${minutes}`;
-}
-
 export const useTimer = () => {
     const isPaused = computed(() => !isRunning.value && savedTime.value > 0)
 

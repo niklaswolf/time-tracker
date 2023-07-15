@@ -3,6 +3,7 @@
 
 use tauri::{Manager, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use tauri_plugin_positioner::{Position, WindowExt};
+use user_idle::UserIdle;
 
 fn main() {
     let system_tray_menu = SystemTrayMenu::new();
@@ -51,7 +52,7 @@ fn main() {
             }
             _ => {}
         })
-        .invoke_handler(tauri::generate_handler![update_system_tray_title])
+        .invoke_handler(tauri::generate_handler![update_system_tray_title, get_idle_time])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -59,4 +60,10 @@ fn main() {
 #[tauri::command]
 fn update_system_tray_title(title: &str, app_handle: tauri::AppHandle){
     let _ =app_handle.tray_handle().set_title(title);
+}
+#[tauri::command]
+fn get_idle_time() -> u64{
+    let idle = UserIdle::get_time().unwrap();
+    let idle_seconds = idle.as_seconds();
+    idle_seconds.into()
 }
