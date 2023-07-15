@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import { register } from '@tauri-apps/api/globalShortcut';
-import { appWindow } from "@tauri-apps/api/window";
+import {register} from '@tauri-apps/api/globalShortcut';
+import {appWindow} from "@tauri-apps/api/window";
+import {emit, listen} from "@tauri-apps/api/event";
 
-const {startTimer, isRunning, stopTimer} = useTimer();
+const {isRunning, isPaused, startTimer, stopTimer, resumeTimer} = useTimer()
 
-if(appWindow.label === 'main'){
+if (appWindow.label === 'main') {
   await register(GLOBAL_SHORTCUT, () => {
-    if(isRunning.value){
-      stopTimer();
-    }
-    else {
-      startTimer()
-    }
+    emit('timer-change-event')
   });
+} else if (appWindow.label === 'menubar') {
+  listen('timer-change-event', () => {
+    if (isRunning.value) {
+      stopTimer();
+    } else {
+      if (isPaused.value) {
+        resumeTimer();
+      } else {
+        startTimer()
+      }
+    }
+  })
 }
 
 </script>
