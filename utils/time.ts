@@ -1,7 +1,4 @@
 export function formatTime(timeInMs: number, includeSeconds: boolean = false): string {
-    if (timeInMs === 0) {
-        return "--:--";
-    }
     const _second = 1000;
     const _minute = _second * 60;
     const _hour = _minute * 60;

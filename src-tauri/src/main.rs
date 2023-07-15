@@ -8,7 +8,7 @@ use user_idle::UserIdle;
 fn main() {
     let system_tray_menu = SystemTrayMenu::new();
     let mut system_tray = SystemTray::new();
-    system_tray = system_tray.with_menu(system_tray_menu).with_title("--:--");
+    system_tray = system_tray.with_menu(system_tray_menu).with_title("00:00");
 
     tauri::Builder::default()
         .plugin(tauri_plugin_positioner::init())

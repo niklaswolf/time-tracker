@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import {invoke, window} from "@tauri-apps/api";
 
-const IDLE_CHECK_INTERVAL = 1000;
-const IDLE_THRESHOLD_SECONDS = 60*10; // 10 minutes, make this configurable later
-
 const currentIdleSeconds = ref(0);
 const idleSecondsStore = ref(0);
 const intervalRef = ref();

@@ -1,5 +1,3 @@
-import {invoke} from '@tauri-apps/api'
-
 const startTime = ref<Date | null>(null);
 const expiredTime = ref(0);
 const formatted = ref(formatTime(0));
@@ -8,6 +6,7 @@ const interval = ref();
 const isRunning = ref(false);
 
 export const useTimer = () => {
+    const {updateTitle} = useSystemTray();
     const isPaused = computed(() => !isRunning.value && savedTime.value > 0)
 
     function startTimer() {
@@ -15,14 +14,14 @@ export const useTimer = () => {
         isRunning.value = true;
 
         formatted.value = formatTime(expiredTime.value + savedTime.value);
-        invoke('update_system_tray_title', {title: formatted.value})
+        updateTitle(formatted.value + " ▶")
         interval.value = setInterval(() => {
             if (startTime.value) {
                 const now = new Date().getTime();
                 const start = startTime.value.getTime();
                 expiredTime.value = (now - start) + savedTime.value;
                 formatted.value = formatTime(expiredTime.value);
-                invoke('update_system_tray_title', {title: formatted.value})
+                updateTitle(formatted.value + " ▶")
             }
 
         }, 1000);
@@ -36,7 +35,7 @@ export const useTimer = () => {
         startTimer();
     }
 
-    async function stopTimer(saveTime: boolean = false): Promise<void> {
+    function stopTimer(saveTime: boolean = false): void {
         isRunning.value = false;
         clearInterval(interval.value);
         interval.value = null;
@@ -51,7 +50,7 @@ export const useTimer = () => {
 
         formatted.value = formatTime(savedTime.value);
         const title = formatted.value + suffix
-        await invoke('update_system_tray_title', { title })
+        updateTitle(title)
     }
 
     onBeforeUnmount(() => {
