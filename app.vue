@@ -17,7 +17,14 @@ if (appWindow.label === 'main') {
       if (isPaused.value) {
         resumeTimer();
       } else {
-        startTimer()
+        try {
+          startTimer()
+        } catch (e){
+          console.error(e)
+          appWindow.show();
+          appWindow.setFocus();
+        }
+
       }
     }
   })
@@ -27,5 +34,5 @@ if (appWindow.label === 'main') {
 <template>
   <MenuBar v-if="appWindow.label === 'menubar'" class="menubar grow"/>
   <IdleNotification v-else-if="appWindow.label === 'idle-notification'" class="idle-notification grow"/>
-  <NuxtWelcome v-else class="main"></NuxtWelcome>
+  <MainWindow v-else class="main"></MainWindow>
 </template>

@@ -4,12 +4,22 @@ const formatted = ref(formatTime(0));
 const savedTime = ref(0);
 const interval = ref();
 const isRunning = ref(false);
+const currentTaskId = ref<string|null>(null)
+
+export class NoTaskSelectedError extends Error {}
 
 export const useTimer = () => {
     const {updateTitle} = useSystemTray();
+    const {addEntry} = useStore();
     const isPaused = computed(() => !isRunning.value && savedTime.value > 0)
 
+    /**
+     * @throws NoTaskSelectedError
+     */
     function startTimer() {
+        if(!currentTaskId.value){
+            throw new NoTaskSelectedError();
+        }
         startTime.value = new Date();
         isRunning.value = true;
 
@@ -44,6 +54,14 @@ export const useTimer = () => {
             savedTime.value = expiredTime.value;
             suffix = ' ⏸'
         } else {
+            if(startTime.value && currentTaskId.value){
+                addEntry({
+                    startTime: startTime.value,
+                    endTime: new Date(),
+                    taskId: currentTaskId.value
+                })
+            }
+
             savedTime.value = 0;
         }
         expiredTime.value = 0;
@@ -66,6 +84,7 @@ export const useTimer = () => {
         resumeTimer,
         isRunning,
         isPaused,
-        formatted
+        formatted,
+        currentTaskId
     }
 }
