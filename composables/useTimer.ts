@@ -8,12 +8,12 @@ const currentTaskId = ref<string|null>(null)
 
 export class NoTaskSelectedError extends Error {}
 
-const INCLUDE_SECONDS = true;
+const INCLUDE_SECONDS = false;
 
 export const useTimer = () => {
     const {updateTitle} = useSystemTray();
     const {addEntry} = useStore();
-    const {emit} = useEvent()
+    const {emit, listen} = useEvent()
     const {startIdleCheck, stopIdleCheck} = useIdleState();
     const isPaused = computed(() => !isRunning.value && savedTime.value > 0)
 
@@ -50,7 +50,7 @@ export const useTimer = () => {
         startTimer();
     }
 
-    function stopTimer(saveTime: boolean = false): void {
+    function stopTimer(saveTime: boolean = false, dismissSeconds = 0): void {
         isRunning.value = false;
         clearInterval(interval.value);
         interval.value = null;
@@ -60,11 +60,19 @@ export const useTimer = () => {
             suffix = ' ⏸'
         } else {
             if(startTime.value && currentTaskId.value){
-                addEntry({
-                    startTime: startTime.value,
-                    endTime: new Date(),
-                    taskId: currentTaskId.value
-                })
+                const endTime = new Date();
+                if(dismissSeconds > 0){
+                    endTime.setTime(endTime.getTime() - dismissSeconds*1000)
+                }
+                console.trace()
+                if(endTime.getTime() > 0){
+                    addEntry({
+                        startTime: startTime.value,
+                        endTime,
+                        taskId: currentTaskId.value
+                    })
+                }
+
             }
 
             savedTime.value = 0;

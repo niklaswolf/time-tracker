@@ -1,5 +1,9 @@
 import {invoke} from "@tauri-apps/api";
 
+export type IDLE_EVENT_PAYLOAD = {
+    seconds: number
+}
+
 const currentIdleSeconds = ref(0);
 const idleSecondsStore = ref(0);
 const intervalRef = ref<NodeJS.Timer|null>(null);
@@ -29,8 +33,9 @@ export const useIdleState = () => {
     }
 
     function reset() {
+        currentIdleSeconds.value = 0;
         idleSecondsStore.value = 0;
     }
 
-    return {startIdleCheck, stopIdleCheck, reset, isIdle, formattedIdle}
+    return {startIdleCheck, stopIdleCheck, reset, isIdle, formattedIdle, idleSeconds: idleSecondsStore}
 }

@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import {window} from "@tauri-apps/api";
-const currentWindow = window.getCurrent();
-const {startIdleCheck, isIdle ,formattedIdle, stopIdleCheck, reset} = useIdleState();
-const {listen} = useEvent();
+import type {IDLE_EVENT_PAYLOAD} from "~/composables/useIdleState";
 
-function handleDismiss() {
-  //TODO affect the timer time
+const currentWindow = window.getCurrent();
+const {startIdleCheck, isIdle, formattedIdle, stopIdleCheck, reset, idleSeconds} = useIdleState();
+const {listen, emit} = useEvent();
+
+async function handleDismiss() {
+  await emit(EVENT_IDLE_DISMISS, {seconds: idleSeconds.value} as IDLE_EVENT_PAYLOAD)
   reset()
   currentWindow.hide();
   startIdleCheck();
 }
 
-function handleKeep() {
+async function handleKeep() {
+  await emit(EVENT_IDLE_KEEP, {seconds: idleSeconds.value} as IDLE_EVENT_PAYLOAD)
   reset()
-  //TODO affect the timer time
   currentWindow.hide();
   startIdleCheck();
 }
