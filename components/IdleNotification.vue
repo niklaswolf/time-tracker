@@ -1,46 +1,25 @@
 <script setup lang="ts">
-import {invoke, window} from "@tauri-apps/api";
-
-const currentIdleSeconds = ref(0);
-const idleSecondsStore = ref(0);
-const intervalRef = ref();
-const isIdle = computed(() => currentIdleSeconds.value >= IDLE_THRESHOLD_SECONDS);
-const formattedIdle = computed(() => formatTime(idleSecondsStore.value * 1000, true))
+import {window} from "@tauri-apps/api";
 const currentWindow = window.getCurrent();
+const {startIdleCheck, isIdle ,formattedIdle, stopIdleCheck, reset} = useIdleState();
+const {listen} = useEvent();
 
 function handleDismiss() {
   //TODO affect the timer time
-  idleSecondsStore.value = 0;
+  reset()
   currentWindow.hide();
   startIdleCheck();
 }
 
 function handleKeep() {
-  idleSecondsStore.value = 0;
+  reset()
   //TODO affect the timer time
   currentWindow.hide();
   startIdleCheck();
 }
 
-function startIdleCheck() {
-  intervalRef.value = setInterval(() => {
-    invoke('get_idle_time').then((data) => {
-      const idleSeconds = data as number;
-      currentIdleSeconds.value = idleSeconds
-      if (idleSeconds > idleSecondsStore.value) {
-        idleSecondsStore.value = idleSeconds;
-      }
-    });
-  }, IDLE_CHECK_INTERVAL);
-}
-
-function stopIdleCheck() {
-  clearInterval(intervalRef.value);
-}
-
-onMounted(() => {
-  startIdleCheck();
-})
+listen(EVENT_TIMER_START, startIdleCheck)
+listen(EVENT_TIMER_STOP, stopIdleCheck)
 
 watch(isIdle, (newIdleState, oldIdleState) => {
   if (newIdleState === true) {
