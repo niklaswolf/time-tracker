@@ -5,9 +5,14 @@ import {IDLE_EVENT_PAYLOAD} from "~/composables/useIdleState";
 
 const {emit, listen} = useEvent();
 if (appWindow.label === 'main') {
-  await register(GLOBAL_SHORTCUT, () => {
-    emit(EVENT_KEYBOARD_SHORTKEY)
-  });
+  try {
+    await register(GLOBAL_SHORTCUT, () => {
+      emit(EVENT_KEYBOARD_SHORTKEY)
+    });
+  } catch (e){
+    console.error(e)
+  }
+
 } else if (appWindow.label === 'menubar') {
   const {isRunning, isPaused, startTimer, stopTimer, resumeTimer} = useTimer()
   /*
