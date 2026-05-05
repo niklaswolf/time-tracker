@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {register} from '@tauri-apps/plugin-global-shortcut';
 import {getCurrentWebviewWindow} from "@tauri-apps/api/webviewWindow";
-import {IDLE_EVENT_PAYLOAD} from "~/composables/useIdleState";
+import type {IDLE_EVENT_PAYLOAD} from "~/composables/useIdleState";
+import {EVENT_KEYBOARD_SHORTKEY} from "~/utils/constants";
 const appWindow = getCurrentWebviewWindow()
 
 const {emit, listen} = useEvent();
