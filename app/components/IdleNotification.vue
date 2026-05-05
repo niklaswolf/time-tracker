@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {window} from "@tauri-apps/api";
+import {getCurrentWebviewWindow} from "@tauri-apps/api/webviewWindow";
 import type {IDLE_EVENT_PAYLOAD} from "~/composables/useIdleState";
 
-const currentWindow = window.getCurrent();
+const currentWindow = getCurrentWebviewWindow();
 const {startIdleCheck, isIdle, formattedIdle, stopIdleCheck, reset, idleSeconds} = useIdleState();
 const {listen, emit} = useEvent();
 

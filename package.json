@@ -10,18 +10,20 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@iconify-json/mdi": "^1.1.53",
-    "@nuxt/devtools": "latest",
-    "@tauri-apps/cli": "^1.4.0",
-    "@types/node": "^18",
-    "@unocss/nuxt": "^0.53.5",
-    "@unocss/preset-icons": "^0.53.5",
-    "@unocss/preset-uno": "^0.53.5",
-    "@vueuse/core": "^10.2.1",
-    "@vueuse/nuxt": "^10.2.1",
-    "nuxt": "^3.6.1"
+    "@iconify-json/mdi": "^1.2.3",
+    "@nuxt/vite-builder": "^4.4.2",
+    "@tauri-apps/cli": "^2.11.0",
+    "@types/node": "^25.6.0",
+    "@unocss/nuxt": "^66.6.8",
+    "@unocss/preset-icons": "^66.6.8",
+    "@unocss/preset-uno": "^66.6.8",
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/nuxt": "^14.3.0",
+    "nuxt": "^4.4.2"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.4.0"
+    "@tauri-apps/api": "^2.11.0",
+    "@tauri-apps/plugin-global-shortcut": "^2.3.1",
+    "@tauri-apps/plugin-http": "^2.5.9"
   }
 }

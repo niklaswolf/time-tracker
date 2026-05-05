@@ -1,4 +1,4 @@
-import { fetch } from '@tauri-apps/api/http';
+import { fetch } from '@tauri-apps/plugin-http';
 
 export class JiraAdapter implements TaskApiInterface {
     private endpoint: string;

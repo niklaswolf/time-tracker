@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import {register} from '@tauri-apps/api/globalShortcut';
-import {appWindow} from "@tauri-apps/api/window";
+import {register} from '@tauri-apps/plugin-global-shortcut';
+import {getCurrentWebviewWindow} from "@tauri-apps/api/webviewWindow";
 import {IDLE_EVENT_PAYLOAD} from "~/composables/useIdleState";
+const appWindow = getCurrentWebviewWindow()
 
 const {emit, listen} = useEvent();
 if (appWindow.label === 'main') {

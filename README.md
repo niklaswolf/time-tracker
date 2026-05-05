@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+# Time Tracker
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A desktop time tracker built with Nuxt 4 and Tauri 2.
 
 ## Features
 - Start/Stop timer with Shortcut "CmdOrControl+Option+T"
@@ -13,18 +13,15 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 Make sure to install the dependencies:
 
 ```bash
-# npm
 npm install
 ```
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the Tauri app with the Nuxt development server on `http://localhost:3000`:
 
 ```bash
-# npm
 npm run tauri dev
-
 ```
 
 ## Production
@@ -32,6 +29,11 @@ npm run tauri dev
 Build the application for production:
 
 ```bash
-# npm
 npm run tauri build
+```
+
+To verify only the macOS app bundle without creating a DMG:
+
+```bash
+npm run tauri build -- --bundles app
 ```

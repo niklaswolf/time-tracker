@@ -2,15 +2,15 @@
 
 ## Project Structure & Module Organization
 
-This is a Nuxt 3 desktop time tracker packaged with Tauri. Vue UI lives in `components/`, the root application entry is `app.vue`, and reusable state or behavior belongs in `composables/`. Shared TypeScript helpers are in `utils/`, Nuxt plugins in `plugins/`, service integrations in `service/`, and global styles in `assets/css/global.css`. Static public files belong in `public/`. The Tauri shell, Rust commands, icons, and desktop configuration live under `src-tauri/`.
+This is a Nuxt 4 desktop time tracker packaged with Tauri 2. Frontend code lives under `app/`: Vue UI in `app/components/`, the root entry in `app/app.vue`, reusable behavior in `app/composables/`, shared helpers in `app/utils/`, Nuxt plugins in `app/plugins/`, service integrations in `app/service/`, and global styles in `app/assets/css/global.css`. Static public files belong in `public/`. The Tauri shell, Rust commands, capabilities, icons, and desktop configuration live under `src-tauri/`.
 
 ## Build, Test, and Development Commands
 
-Install dependencies with `npm install`. Use `npm run dev` for the Nuxt browser dev server, and prefer `npm run tauri dev` when validating desktop behavior such as the system tray, global shortcut, idle detection, or native windows. Build the web app with `npm run build`; create a static Nuxt output with `npm run generate`; preview a production Nuxt build with `npm run preview`. Build the desktop application with `npm run tauri build`.
+Install dependencies with `npm install`. Use `npm run dev` for the Nuxt browser dev server, and prefer `npm run tauri dev` when validating desktop behavior such as the system tray, global shortcut, idle detection, or native windows. Build the web app with `npm run build`; create the static output consumed by Tauri with `npm run generate`; preview a production Nuxt build with `npm run preview`. Build the desktop application with `npm run tauri build`; use `npm run tauri build -- --bundles app` to verify the macOS app bundle without creating a DMG.
 
 ## Coding Style & Naming Conventions
 
-Write Vue single-file components with `<script setup lang="ts">`. Name components in PascalCase, for example `MainWindow.vue`, and name composables with the `useX.ts` pattern, for example `useTimer.ts`. Keep shared types in `types.d.ts` when they are globally consumed. Follow the existing TypeScript style: semicolons are optional in current files, imports use Nuxt aliases such as `~/composables/useIdleState` when helpful, and UnoCSS utility classes are used directly in templates. Keep Rust changes inside `src-tauri/src/` idiomatic for edition 2021.
+Write Vue single-file components with `<script setup lang="ts">`. Name components in PascalCase, for example `MainWindow.vue`, and name composables with the `useX.ts` pattern, for example `useTimer.ts`. Keep shared frontend types in `app/types.d.ts` when globally consumed. Follow the existing TypeScript style: semicolons are optional in current files, imports use Nuxt aliases such as `~/composables/useIdleState` when helpful, and UnoCSS utility classes are used directly in templates. Keep Rust changes inside `src-tauri/src/` idiomatic for edition 2021.
 
 ## Testing Guidelines
 
@@ -22,4 +22,4 @@ Recent history uses short conventional prefixes such as `feat:`, `fix:`, and `ch
 
 ## Security & Configuration Tips
 
-Do not commit real Jira credentials. Runtime Jira values are configured through Nuxt public runtime config, including `NUXT_PUBLIC_JIRA_ENDPOINT`, `NUXT_JIRA_USER`, and `NUXT_JIRA_PASSWORD`. Treat `.env` as local-only configuration and verify `src-tauri/tauri.conf.json` permissions before enabling new native capabilities.
+Do not commit real Jira credentials. Runtime Jira values are configured through Nuxt public runtime config, including `NUXT_PUBLIC_JIRA_ENDPOINT`, `NUXT_JIRA_USER`, and `NUXT_JIRA_PASSWORD`. Treat `.env` as local-only configuration and add explicit Tauri permissions in `src-tauri/capabilities/` before enabling new native APIs.

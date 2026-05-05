@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {getAll} from "@tauri-apps/api/window";
+import {getAllWebviewWindows} from "@tauri-apps/api/webviewWindow";
 
 const {startTimer, stopTimer, resumeTimer, pauseTimer, isRunning, isPaused, formatted} = useTimer();
 const {currentTaskId, taskLabel, taskId} = useTask()
@@ -8,8 +8,8 @@ const showTimer = ref(!!currentTaskId.value);
 const searchString = ref('');
 const searchboxRef = ref();
 
-function handleOpenMain() {
-  const mainWindow = getAll().find(window => window.label === 'main');
+async function handleOpenMain() {
+  const mainWindow = (await getAllWebviewWindows()).find(window => window.label === 'main');
   mainWindow?.show();
 }
 

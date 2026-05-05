@@ -3,69 +3,49 @@
   "build": {
     "beforeBuildCommand": "npm run generate",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:3000",
-    "distDir": "../.output/public"
+    "frontendDist": "../.output/public",
+    "devUrl": "http://localhost:3000"
   },
-  "package": {
-    "productName": "Time tracker",
-    "version": "0.1.0"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "globalShortcut": {
-        "all": true
-      },
-      "http": {
-        "all": true,
-        "request": true,
-        "scope": ["https://*"]
-      }
+  "bundle": {
+    "active": true,
+    "category": "DeveloperTool",
+    "copyright": "",
+    "targets": "all",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
     },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+    "longDescription": "",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": [],
+    "shortDescription": "",
+    "linux": {
       "deb": {
         "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "niklaswolf.timetracker",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
       }
-    },
-    "security": {
-      "csp": null
-    },
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
-    },
-    "updater": {
-      "active": false
-    },
-    "macOSPrivateApi": true,
+    }
+  },
+  "productName": "Time tracker",
+  "mainBinaryName": "Time tracker",
+  "version": "0.1.0",
+  "identifier": "niklaswolf.timetracker",
+  "plugins": {},
+  "app": {
     "windows": [
       {
         "label": "menubar",
@@ -78,7 +58,8 @@
         "hiddenTitle": true,
         "decorations": false,
         "focus": false,
-        "transparent": true
+        "transparent": true,
+        "useHttpsScheme": true
       },
       {
         "label": "main",
@@ -91,7 +72,8 @@
         "hiddenTitle": true,
         "decorations": true,
         "focus": false,
-        "transparent": false
+        "transparent": false,
+        "useHttpsScheme": true
       },
       {
         "label": "idle-notification",
@@ -104,8 +86,17 @@
         "hiddenTitle": true,
         "decorations": false,
         "focus": false,
-        "transparent": false
+        "transparent": false,
+        "useHttpsScheme": true
       }
-    ]
+    ],
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "security": {
+      "csp": null
+    },
+    "macOSPrivateApi": true
   }
 }

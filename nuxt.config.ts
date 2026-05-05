@@ -10,6 +10,14 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: false },
   ssr: false,
+  vite: {
+    clearScreen: false,
+    envPrefix: ['VITE_', 'TAURI_'],
+    server: {
+      strictPort: true,
+    },
+  },
+  ignore: ['**/src-tauri/**'],
   modules: [
     '@unocss/nuxt','@vueuse/nuxt',
   ],
